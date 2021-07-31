@@ -14,11 +14,9 @@ const ContactsList = () => {
 
     const onContactDelete = e => dispatch(deleteNumber(e.target.parentElement.id));
     
-    const doFetch = () => dispatch(fetchContacts());
-
     useEffect(() => {
-        doFetch()
-    }, []);
+        dispatch(fetchContacts());
+    }, [dispatch]);
     
     const contactList = filter !== "" ?
         contacts.filter(contact => { return contact.name.toString().toLowerCase().includes(filter.toString().toLowerCase()) }) :
