@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { addNumber } from '../redux/contacts/contacts-operations';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
 import buttonStyles from '../styles/button.module.css';
 import styles from '../styles/Form.module.css';
 
@@ -9,8 +9,20 @@ const Form = () => {
     const [number, setNumber] = useState("");
     const dispatch = useDispatch();
 
+    const store = useStore();
+    const state = store.getState();
+    const existingContacts = state.contacts.items;
+
     const onContactAdd = e => {
         e.preventDefault();
+
+        const existingNames = existingContacts.map(contact => contact.name.toLowerCase());
+
+        if (existingNames.includes(name.toLowerCase())){
+            setName("");
+            setNumber("");
+            return alert(`Contact with name ${name} is already in your Phonebook.`)
+        };
 
         dispatch(addNumber(name, number))
 

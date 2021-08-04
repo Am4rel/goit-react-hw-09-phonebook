@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useRef} from 'react';
+import React, { Suspense, lazy, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import { Switch, Route} from 'react-router-dom';
 import { AppBar } from './components/AppBar';
@@ -16,7 +16,9 @@ const App = () => {
   const isAuthenticated = useSelector(state => selectors.isAuthenticated(state));
   const dispatch = useDispatch();
   
-  useRef(() => {dispatch(getCurrentUser())}, [])
+  useEffect(() => {
+    dispatch(getCurrentUser())
+  }, [dispatch])
 
   return (
     <>
